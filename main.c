@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 #include "process.h"
 #include "BestFit.h"
 #include "NextFit.h"
@@ -11,7 +12,6 @@
 
 
 int main(int argc, char* argv[]) {
-    
     if(argc != 2)
     {
         fprintf(stderr, "Usage: ./%s, <input_file>", argv[0]);
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     
     Sim_Next_Fit(&p_list, stdout);
     Sim_Best_Fit(&p_list, stdout);
-    Sim_Worst_Fit(&p_list, stdout);
+    Sim_Worst_Fit(p_list.list,p_list._size,stdout);//change arguments for worst_fit
     Sim_Non_Con(&p_list, stdout);
     
     

@@ -1,4 +1,5 @@
 #include <string.h>
+#include <ctype.h>
 
 #define BUFFER_SIZE 512
 #define error(msg) \
@@ -130,6 +131,10 @@ void parse_input(FILE* fp, struct process_list* plist, unsigned int num)
             
             s = strtok(NULL, "\n");
             temp.t_running_2 = atoi(s);
+        }
+        else{//add initializer here
+            temp.t_arrival_2 = 0;
+            temp.t_running_2 = 0;
         }
         add_process(plist, temp);
     }
