@@ -1,11 +1,22 @@
-//@Simon: next-fit
+/* CSCI-4210 Operating Systems Project 2
+ * 
+ * Group Members: 
+ * 
+ * Yifan Xu: xuy11 
+ * Hantian Jiang: jiangh5 
+ * Chenjun Zhou: zhouc3 
+ * 
+ * 
+ */ 
+ 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "process.h"
+#include "WorstFit.h"
 #include "BestFit.h"
 #include "NextFit.h"
-#include "WorstFit.h"
 #include "NonCon.h"
 
 
@@ -30,17 +41,17 @@ int main(int argc, char* argv[]) {
     
     parse_input(input_file, &p_list, num_process);
     
-#if 0
-    print_list(&p_list);
-#endif
     
     /*Simulation*/
     
-    Sim_Next_Fit(&p_list, stdout);
+    Sim_Next_Fit(p_list.list,p_list._size,stdout);
     Sim_Best_Fit(&p_list, stdout);
-    Sim_Worst_Fit(&p_list, stdout);
-    Sim_Non_Con(&p_list, stdout);
+    Sim_Worst_Fit(p_list.list,p_list._size,stdout);//change arguments for worst_fit
+    Sim_Non_Con(p_list.list,p_list._size,stdout);
     
+#if 0
+    print_list(&p_list);
+#endif
     
     
     fclose(input_file);

@@ -1,6 +1,20 @@
+/* CSCI-4210 Operating Systems Project 2
+ * 
+ * Group Members: 
+ * 
+ * Yifan Xu: xuy11 
+ * Hantian Jiang: jiangh5 
+ * Chenjun Zhou: zhouc3 
+ * 
+ * 
+ */ 
+
+
 #include <string.h>
+#include <ctype.h>
 
 #define BUFFER_SIZE 512
+#define FRAME_SIZE 256
 #define error(msg) \
     {perror(msg); exit(EXIT_FAILURE);}
 
@@ -131,10 +145,39 @@ void parse_input(FILE* fp, struct process_list* plist, unsigned int num)
             s = strtok(NULL, "\n");
             temp.t_running_2 = atoi(s);
         }
+        else
+        {
+            temp.t_arrival_2 = 0;
+            temp.t_running_2 = 0;
+        }
         add_process(plist, temp);
     }
     
     return;
+}
+
+void print_frames(FILE* fp, char frame[FRAME_SIZE])
+{
+    unsigned int i;
+    for(i = 0; i < 32; i++)
+    {
+        fprintf(fp, "=");
+    }
+    for(i = 0; i < FRAME_SIZE; i++)
+    {
+        if(i%32 == 0)
+        {
+            fprintf(fp, "\n");
+        }
+        fprintf(fp, "%c", frame[i]);
+    }
+    fprintf(fp, "\n");
+    for(i = 0; i < 32; i++)
+    {
+        fprintf(fp, "=");
+    }
+    fprintf(fp, "\n");
+    fflush(NULL);
 }
 
 
@@ -146,8 +189,8 @@ void print_list(struct process_list* list)
     unsigned int i;
     for(i = 0; i < list->_size; i++)
     {
-        printf("Process id: %c, ta1: %d, tr1: %d, ta2: %d, tr2: %d\n", 
-            list->list[i].id, list->list[i].t_arrival_1, 
+        printf("Process id: %c, mem: %d, ta1: %d, tr1: %d, ta2: %d, tr2: %d\n", 
+            list->list[i].id, list->list[i]._mem, list->list[i].t_arrival_1, 
             list->list[i].t_running_1, list->list[i].t_arrival_2, 
             list->list[i].t_running_2);
     }
