@@ -1,4 +1,4 @@
-/*
+/* CSCI-4210
  * @Hantian Jiang
  *  <jiangh5@rpi.edu>
  *
@@ -39,6 +39,7 @@ void Sim_Next_Fit(struct process_list* pl, FILE* output)
     }
     /*algo*/
     printf("time %dms: Simulator started (Contiguous -- Next-Fit)\n", sim_time);
+                        fflush(NULL);
     
     while(counter > 0)
     {
@@ -50,12 +51,16 @@ void Sim_Next_Fit(struct process_list* pl, FILE* output)
             {
                 fprintf(output, "time %dms: Process %c arrived (requires %d frames)\n", 
                     sim_time, plist->list[i].id, plist->list[i]._mem);
+                        fflush(NULL);
             
                 /*place process*/
                 if(plist->list[i]._mem > remained)
                 {
                     fprintf(output, "time %dms: Cannot place process %c -- skipped!\n", 
                         sim_time, plist->list[i].id);
+                        fflush(NULL);
+                        remove_process(plist, plist->list[i].id);
+                        counter--;
                 }
                 else
                 {
@@ -105,6 +110,7 @@ void Sim_Next_Fit(struct process_list* pl, FILE* output)
                             }
                             fprintf(output, "time %dms: Placed process %c:\n", 
                                 sim_time, plist->list[i].id);
+                        fflush(NULL);
                             //printf("frame_ind: %d\n", frame_ind);
                             print_frames(output, frames);
                             break;
@@ -116,6 +122,7 @@ void Sim_Next_Fit(struct process_list* pl, FILE* output)
                         
                         fprintf(output, "time %dms: Cannot place process %c -- starting defragmentation\n", 
                             sim_time, plist->list[i].id);
+                        fflush(NULL);
                         
                         unsigned int dtime = 0;
                         
@@ -181,6 +188,7 @@ void Sim_Next_Fit(struct process_list* pl, FILE* output)
                         sim_time += dtime;
                         
                         fprintf(output, "time %dms: Defragmentation complete (moved %d frames: %s)\n", sim_time, dtime, moved);
+                        fflush(NULL);
                         print_frames(output, frames);
                         
                         //////////////////////////////////////////////////////////////
@@ -220,6 +228,7 @@ void Sim_Next_Fit(struct process_list* pl, FILE* output)
                 }
                 fprintf(output, "time %dms: Process %c removed:\n", 
                     sim_time, plist->list[i].id);
+                fflush(NULL);
                 print_frames(output, frames);
                 counter--;
             }
